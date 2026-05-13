@@ -23,7 +23,7 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
+    public ResponseEntity<Task> getTaskById(@PathVariable String id) {
         Task task = taskService.getTaskById(id);
         return new ResponseEntity<>(task, HttpStatus.OK);
     }
@@ -35,13 +35,13 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Task> update(@PathVariable Long id, @Valid @RequestBody Task taskDetails) {
+    public ResponseEntity<Task> update(@PathVariable String id, @Valid @RequestBody Task taskDetails) {
         Task updatedTask = taskService.updateTask(id, taskDetails);
         return new ResponseEntity<>(updatedTask, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
+    public ResponseEntity<String> delete(@PathVariable String id) {
         taskService.deleteTask(id);
         return new ResponseEntity<>("Task " + id + " has been deleted!", HttpStatus.OK);
     }

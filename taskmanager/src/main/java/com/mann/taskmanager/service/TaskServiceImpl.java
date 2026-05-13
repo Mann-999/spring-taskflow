@@ -20,7 +20,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task getTaskById(Long id) {
+    public Task getTaskById(String id) {
         return taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + id));
     }
@@ -31,7 +31,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task updateTask(Long id, Task taskDetails) {
+    public Task updateTask(String id, Task taskDetails) {
         Task existingTask = getTaskById(id); // reusing our own method
 
         existingTask.setTitle(taskDetails.getTitle());
@@ -42,7 +42,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void deleteTask(Long id) {
+    public void deleteTask(String id) {
         Task existingTask = getTaskById(id); // throws exception if not found
         taskRepository.delete(existingTask);
     }

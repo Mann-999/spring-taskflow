@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface TaskService {
     List<Task> getAllTasks();
-    Task getTaskById(Long id);
+    Task getTaskById(String id);
     Task createTask(Task task);
-    Task updateTask(Long id, Task taskDetails);
-    void deleteTask(Long id);
+    Task updateTask(String id, Task taskDetails);
+    void deleteTask(String id);
 }
