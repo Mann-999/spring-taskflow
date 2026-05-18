@@ -27,6 +27,32 @@ A Spring Boot REST API for managing tasks using MongoDB.
 | PUT | /tasks/{id} | Update task |
 | DELETE | /tasks/{id} | Delete task |
 
+## Importatant Annotaions used in this project
+  ### @RestController
+  - tells Spring this class handles HTTP requests and return data as JSON instead of HTML pages.
+  - Internally, it is a shorthand for @Controller and @ResponseBody.
+  - @Controller handles web request.
+  - @ResponseBody return value goes directly into HTTP response body.
+  ### @RequestController
+  - sets the base API path for the whole controller.
+    ```
+    @RequestMapping ("/api/users")
+    ```
+### Specific HTTP endpoints
+- ### @GetMapping("/{id}")
+- ### @PostMapping
+- ### @PutMapping("/{id}")
+- ### @DeleteMapping("/{id}")
+  ```
+  @RequestMapping ("/api/users")
+  public class UserCOntroller {
+      @GetMapping("/{id}")
+      public String getUser() {
+          return "user";
+      }
+  }
+  ```
+
 ## Running the Project
 
 ### Start MongoDB
@@ -62,3 +88,4 @@ mongod
 - CRUD APIs fully functional
 - MongoDB connected successfully
 - GET, POST, PUT, DELETE working
+  
