@@ -1,10 +1,12 @@
 # Task Manager API
 
-A Spring Boot REST API for managing tasks using MongoDB.
+A Spring Boot REST API for managing tasks with JWT authentication using MongoDB.
 
 ## Tech Stack
 - Java 21
 - Spring Boot
+- Spring Security
+- JWT (JSON Web Tokens)
 - MongoDB
 - Maven
 - Lombok
@@ -16,9 +18,18 @@ A Spring Boot REST API for managing tasks using MongoDB.
 - Get Task By ID
 - Update Task
 - Delete Task
+- User Registration
+- User Login with JWT
 
 ## API Endpoints
 
+### Auth
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | /auth/register | Register new user |
+| POST | /auth/login | Login and get JWT token |
+
+### Tasks
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | /tasks | Get all tasks |
@@ -27,46 +38,51 @@ A Spring Boot REST API for managing tasks using MongoDB.
 | PUT | /tasks/{id} | Update task |
 | DELETE | /tasks/{id} | Delete task |
 
-## Importatant Annotaions used in this project
-  ### @RestController
-  - tells Spring this class handles HTTP requests and return data as JSON instead of HTML pages.
-  - Internally, it is a shorthand for @Controller and @ResponseBody.
-  - @Controller handles web request.
-  - @ResponseBody return value goes directly into HTTP response body.
-  ### @RequestController
-  - sets the base API path for the whole controller.
-    ```
+## Important Annotations used in this project
+### @RestController
+- tells Spring this class handles HTTP requests and returns data as JSON instead of HTML pages.
+- Internally, it is a shorthand for @Controller and @ResponseBody.
+- @Controller handles web request.
+- @ResponseBody return value goes directly into HTTP response body.
+### @RequestMapping
+- sets the base API path for the whole controller.
+```
     @RequestMapping ("/api/users")
-    ```
+```
 ### Specific HTTP endpoints
 - ### @GetMapping("/{id}")
 - ### @PostMapping
 - ### @PutMapping("/{id}")
 - ### @DeleteMapping("/{id}")
-  ```
+```
   @RequestMapping ("/api/users")
-  public class UserCOntroller {
+  public class UserController {
       @GetMapping("/{id}")
       public String getUser() {
           return "user";
       }
   }
-  ```
+```
 
 ## Running the Project
 
 ### Start MongoDB
 
-Run MongoDB manually:
-
 ```bash
-mongod
+cd "C:\Program Files\MongoDB\Server\8.0\bin"
+mongod.exe
 ```
 
 ### Run Spring Boot App
 
 ```bash
 ./mvnw spring-boot:run
+```
+
+### Authentication
+Register a user then login to get a JWT token. Include the token in subsequent requests:
+```
+Authorization: Bearer <your_token>
 ```
 
 ## Project Progress
@@ -84,8 +100,25 @@ mongod
 - Integrated Lombok
 - Tested APIs using Postman
 
-### Current Status
+### Day 3
+- Created `User` entity with MongoDB mapping
+- Created `UserRepository` with `findByUsername` query
+
+### Day 4
+- Added JWT dependency to `pom.xml`
+- Built `JwtUtil` — token generation and validation
+- Built `SecurityConfig` — route protection and stateless session policy
+
+### Day 5
+- Built `CustomUserDetailsService` — loads user from MongoDB for Spring Security
+- Built `JwtFilter` — intercepts requests and validates JWT tokens
+- Plugged `JwtFilter` into `SecurityConfig`
+- Built `AuthController` — `/auth/register` and `/auth/login` endpoints
+- Passwords stored as BCrypt hash
+- JWT token returned on successful login
+
+## Current Status
 - CRUD APIs fully functional
 - MongoDB connected successfully
-- GET, POST, PUT, DELETE working
-  
+- JWT Authentication working
+- Register and Login endpoints tested via Postman
