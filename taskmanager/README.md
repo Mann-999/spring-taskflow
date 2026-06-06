@@ -28,6 +28,7 @@ A Spring Boot REST API for managing tasks with JWT authentication using MongoDB.
 |--------|----------|-------------|
 | POST | /auth/register | Register new user |
 | POST | /auth/login | Login and get JWT token |
+| GET | /auth/me | Get current logged in user |
 
 ### Tasks
 | Method | Endpoint | Description |
@@ -116,6 +117,12 @@ Authorization: Bearer <your_token>
 - Built `AuthController` — `/auth/register` and `/auth/login` endpoints
 - Passwords stored as BCrypt hash
 - JWT token returned on successful login
+
+### Day 6
+- Built `GET /auth/me` endpoint — returns current user info from JWT token
+- Fixed `permitAll()` scope — only `/auth/register` and `/auth/login` are public
+- Fixed `JwtFilter` to handle expired tokens gracefully with try-catch
+- Learned: `@AuthenticationPrincipal` only works on `authenticated()` routes
 
 ## Current Status
 - CRUD APIs fully functional

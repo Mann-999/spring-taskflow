@@ -9,6 +9,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.http.ResponseEntity;
+
 import java.util.Map;
 
 @RestController
@@ -43,5 +47,16 @@ public class AuthController {
 
         String token = jwtUtil.generateToken(user.getUsername());
         return Map.of("token", token);
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<User> getCurrentUser(
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        User user = userRepository.findByUsername(userDetails.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        user.setPassword(null);
+        return ResponseEntity.ok(user);
     }
 }
