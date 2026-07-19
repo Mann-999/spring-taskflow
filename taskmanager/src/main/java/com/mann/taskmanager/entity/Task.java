@@ -11,8 +11,9 @@ import lombok.Data;
 public class Task {
 
     @Id
-
     private String id;
+
+    private String userid;
 
     @NotBlank(message = "Title cannot be empty")
     @Size(max = 100, message = "Title cannot exceed 100 characters")

@@ -4,6 +4,7 @@ import com.mann.taskmanager.entity.User;
 import com.mann.taskmanager.repository.UserRepository;
 import com.mann.taskmanager.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,11 +33,20 @@ public class AuthController {
     private JwtUtil jwtUtil;
 
     @PostMapping("/register")
-    public String register(@RequestBody User user) {
+    public ResponseEntity<Map<String, String>> register(@RequestBody User user) {
+        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body(Map.of("message", "Username already taken"));
+        }
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole("ROLE_USER");
         userRepository.save(user);
-        return "User registered successfully";
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED) // 201
+                .body(Map.of("message", "User registered successfully"));
     }
 
     @PostMapping("/login")
