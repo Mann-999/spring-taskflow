@@ -1,2 +1,23 @@
-.idea/
+# Maven
 target/
+*.class
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Spring Boot
+*.jar
+*.war
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment / secrets
+application-local.properties
+.env
+
+# Logs
+*.log
